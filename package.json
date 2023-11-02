@@ -1,5 +1,5 @@
 {
-  "name": "tagstest",
+  "name": "tags-test",
   "version": "0.0.1",
   "description": "This is for testing tags functionality",
   "main": "server.js",
