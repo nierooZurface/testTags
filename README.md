@@ -1,1 +1,1 @@
-Is it the same
+Now the bug is fixed
