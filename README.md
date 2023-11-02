@@ -1,3 +1,3 @@
-#Develop
+Now the bug is fixed
 
-##This is the develop branch
+Added this new line
