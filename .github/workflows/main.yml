@@ -24,7 +24,6 @@ jobs:
       - name: Get latest tag
         id: latesttag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
-        run: echo ${{ steps.latesttag.outputs.tag }}
 
       - name: Update CHANGELOG
         id: changelog
