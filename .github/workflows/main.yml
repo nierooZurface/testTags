@@ -9,7 +9,6 @@ jobs:
       runs-on: ubuntu-latest
       outputs:
         previous-tag: ${{ steps.previoustag.outputs.tag }}
-        timestamp-diff: ${{ steps.diff.outputs.timestamp-diff }}
 
       steps:
         - uses: actions/checkout@v2.3.3
@@ -31,5 +30,5 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest based on ${{ needs.analyze-tags.outputs.previous-tag }}"
+          automatic_release_tag: "${{ needs.analyze-tags.outputs.previous-tag }}"
           prerelease: "true"
