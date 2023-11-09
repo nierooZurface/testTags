@@ -41,6 +41,6 @@ jobs:
           allowUpdates: true
           draft: true
           makeLatest: true
-          name: ${{ github.ref_name }}
+          name: ${{ steps.latesttag.outputs.tag }}
           body: ${{ steps.changelog.outputs.changes }}
           token: ${{ secrets.GITHUB_TOKEN }}
