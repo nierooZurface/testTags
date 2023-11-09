@@ -31,4 +31,4 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "${{ needs.analyze-tags.outputs.previous-tag }}"
-          prerelease: "true"
+          prerelease: "false"
