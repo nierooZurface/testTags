@@ -10,6 +10,7 @@ jobs:
       outputs:
         previous-tag: ${{ steps.previoustag.outputs.tag }}
         timestamp-diff: ${{ steps.diff.outputs.timestamp-diff }}
+        
       steps:
         - uses: actions/checkout@v2.3.3
           with:
@@ -20,6 +21,7 @@ jobs:
   pre-release:
     name: "Create pre Release"
     runs-on: "ubuntu-latest"
+    needs: analyze-tags
 
     steps:
       # ...
