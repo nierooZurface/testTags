@@ -1,3 +1,1 @@
-Now the bug is fixed
-
-Added this new line
+No change should happen now
