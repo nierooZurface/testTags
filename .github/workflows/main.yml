@@ -1,4 +1,4 @@
-name: "Create pre-release and tag"
+name: "Create pre-release"
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - "main"
 jobs:
   pre-release:
-    name: "Pre Release"
+    name: "Create pre Release"
     runs-on: "ubuntu-latest"
 
     steps:
