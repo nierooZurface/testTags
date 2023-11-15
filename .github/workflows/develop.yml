@@ -38,8 +38,8 @@ jobs:
                     "labels": ["feature"]
                 },
                 {
-                    "title": "## 🐛 Fixes",
-                    "labels": ["fix"]
+                    "title": "## 🐛 Bug fixes",
+                    "labels": ["bugFix"]
                 },
                 {
                     "title": "## 🧪 Tests",
