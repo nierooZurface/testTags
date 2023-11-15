@@ -34,4 +34,4 @@ jobs:
           toTag: ${{ env.previousTag }}
           includeInvalidCommits: true
           writeToFile: true
-          excludeTypes: ""
+          excludeTypes: "merge"
