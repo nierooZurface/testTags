@@ -25,11 +25,13 @@ jobs:
           echo "previousTag: $name"
           echo "previousTag=$name" >> $GITHUB_ENV
   
-  changelog:
-    name: Chanegelog Generator
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: etcdigital/pull-request-changelog@master
+  - name: Update CHANGELOG
+        id: changelog
+        uses: requarks/changelog-action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ github.token }}
+          fromTag: ${{ steps.latesttag.outputs.tag }}
+          toTag: ${{ env.previousTag }}
+          writeToFile: false
+          includeInvalidCommits: false
+          restrictToTypes: "merge"
