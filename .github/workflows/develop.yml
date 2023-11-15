@@ -36,5 +36,4 @@ jobs:
 
       - name: Echo changelog
         run: |
-        echo ${{steps.github_release.outputs.changelog}}
-        
+          echo ${{steps.github_release.outputs.changelog}}
