@@ -1,8 +1,8 @@
 name: Changelog Generator
 on:
   push:
-    tags:
-    - '*'
+    branches:
+      - "develop"
 
 jobs:
   deploy:
@@ -36,4 +36,6 @@ jobs:
           toTag: ${{ steps.latesttag.outputs.tag }}
       
       - name: Print output of changelog
-        run: echo ${{steps.build_changelog.outputs.changelog}}
+        run: |
+          echo hello world
+          echo ${{steps.build_changelog.outputs.changelog}}
