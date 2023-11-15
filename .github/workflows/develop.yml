@@ -1,8 +1,8 @@
 name: Changelog Generator
 on:
   push:
-    branches:
-      - "develop"
+    tags:
+    - '*'
 
 jobs:
   deploy:
