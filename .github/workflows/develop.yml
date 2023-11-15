@@ -31,6 +31,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          outputfile: ../CHANGELOG.md
+          outputfile: ./CHANGELOG.md
           fromTag: ${{ env.previousTag }}
           toTag: ${{ steps.latesttag.outputs.tag }}
