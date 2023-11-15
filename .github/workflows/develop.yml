@@ -38,4 +38,4 @@ jobs:
       - name: Print output of changelog
         run: |
           echo hello world
-          echo ${{steps.build_changelog.outputs.changelog}}
+          echo ${{steps.build_changelog.outputs.pull_requests}}
