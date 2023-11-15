@@ -35,7 +35,6 @@ jobs:
           fromTag: ${{ env.previousTag }}
           toTag: ${{ steps.latesttag.outputs.tag }}
 
-      - name: echo
-        id: echo
-        run: |
-        echo ${{steps.build_changelog.outputs.changelog}}
+        - name: Output changelog
+          id: outputChangelog
+          run: echo ${{steps.build_changelog.outputs.changelog}}
