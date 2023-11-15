@@ -26,14 +26,15 @@ jobs:
           echo "previousTag=$name" >> $GITHUB_ENV
 
       - name: Build Changelog
-        id: build_changelog
+        id: github_release
         uses: mikepenz/release-changelog-builder-action@v3
         with:
           fromTag: ${{ env.previousTag }}
           toTag: ${{ steps.latesttag.outputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Print output of changelog
-        run: |
-          echo ${{steps.build_changelog.outputs.changelog}}
+
+      - name: Create Release
+        uses: mikepenz/action-gh-release@v0.2.0-a03 #softprops/action-gh-release
+        with:
+          body: ${{steps.github_release.outputs.changelog}}
