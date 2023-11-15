@@ -33,4 +33,5 @@ jobs:
           fromTag: ${{ steps.latesttag.outputs.tag }}
           toTag: ${{ env.previousTag }}
           includeInvalidCommits: true
+          writeToFile: true
           excludeTypes: ""
