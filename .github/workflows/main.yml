@@ -34,7 +34,7 @@ jobs:
           toTag: ${{ env.previousTag }}
           writeToFile: false
           includeInvalidCommits: true
-          excludeTypes: ""
+          excludeTypes: "merge"
 
       - name: Create Release
         uses: ncipollo/release-action@v1.12.0
