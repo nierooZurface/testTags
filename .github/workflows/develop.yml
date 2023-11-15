@@ -5,7 +5,7 @@ on:
     branches:
       - "develop"
 jobs:
-  deploy:
+  changelog:
     runs-on: ubuntu-latest
 
     steps:
