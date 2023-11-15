@@ -34,3 +34,8 @@ jobs:
           outputfile: ./CHANGELOG.md
           fromTag: ${{ env.previousTag }}
           toTag: ${{ steps.latesttag.outputs.tag }}
+
+      - name: echo
+        id: echo
+        run: |
+        echo ${{steps.build_changelog.outputs.changelog}}
