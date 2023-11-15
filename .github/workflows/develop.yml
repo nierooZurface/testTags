@@ -28,12 +28,12 @@ jobs:
       - name: Build Changelog
         id: build_changelog
         uses: mikepenz/release-changelog-builder-action@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           outputfile: ./CHANGELOG.md
           fromTag: ${{ env.previousTag }}
           toTag: ${{ steps.latesttag.outputs.tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Print output of changelog
         run: |
