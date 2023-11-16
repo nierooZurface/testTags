@@ -60,16 +60,17 @@ jobs:
           outputFile: ../CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      
+          
       - name: Get next version (patch)
         if: github.event.label.name == 'bugFix'
         uses: reecetech/version-increment@2023.10.1
         with:
           release_branch: main
           increment: patch
-        - name: Set version env
-          run: echo "newVersion=$version" >> $GITHUB_ENV
+        name: Set version env
+        run: |
+          echo "previousTag: $name"
+          echo "newVersion=$version" >> $GITHUB_ENV
 
       - name: Get next version (minor)
         if: github.event.label.name == 'feature'
@@ -77,10 +78,10 @@ jobs:
         with:
           release_branch: main
           increment: patch
-        - name: Set version env
-          run: |
-            echo "previousTag: $name"
-            echo "newVersion=$version" >> $GITHUB_ENV
+        name: Set version env
+        run: |
+          echo "previousTag: $name"
+          echo "newVersion=$version" >> $GITHUB_ENV
 
       - name: Get next version (minor)
         if: github.event.label.name != 'feature' || github.event.label.name != 'bugFix'
