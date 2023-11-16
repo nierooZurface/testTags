@@ -77,7 +77,8 @@ jobs:
           echo "previousTag: $name"
           echo "previousTag=$name" >> $GITHUB_ENV
 
-      - name: Build Changelog
+      - if: ${{env.newVersion}} != 'undefined'
+        name: Build Changelog
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v3
         with:
