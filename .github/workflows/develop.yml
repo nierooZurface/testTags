@@ -60,3 +60,8 @@ jobs:
           outputFile: ../CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Get next version
+        uses: reecetech/version-increment@2023.10.1
+        id: version
+        run: echo ${{ steps.version.outputs.version }}
