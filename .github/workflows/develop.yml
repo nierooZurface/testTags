@@ -75,6 +75,12 @@ jobs:
         with:
           release_branch: main
           increment: patch
+
+      - name: Get next version (minor)
+        if: github.event.label.name != 'feature' || github.event.label.name != 'bugFix'
+        uses: reecetech/version-increment@2023.10.1
+        with:
+          release_branch: main
       
       - name: Print next version
         run: |
