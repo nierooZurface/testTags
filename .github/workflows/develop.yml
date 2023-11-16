@@ -68,9 +68,9 @@ jobs:
         with:
           release_branch: main
           increment: 
-            if: github.event.label.name == 'bugFix'
+            if: ${{ github.event.label.name == 'bugFix' }}
               patch
-            if: github.event.label.name == 'feature'
+            if: ${{ github.event.label.name == 'feature' }}
               minor
 
       
