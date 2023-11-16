@@ -78,7 +78,9 @@ jobs:
           release_branch: main
           increment: patch
         - name: Set version env
-          run: echo "newVersion=$version" >> $GITHUB_ENV
+          run: |
+            echo "previousTag: $name"
+            echo "newVersion=$version" >> $GITHUB_ENV
 
       - name: Get next version (minor)
         if: github.event.label.name != 'feature' || github.event.label.name != 'bugFix'
@@ -86,7 +88,9 @@ jobs:
         with:
           release_branch: main
         - name: Set version env
-          run: echo "newVersion=$version" >> $GITHUB_ENV
+          run: |
+            echo "previousTag: $name"
+            echo "newVersion=$version" >> $GITHUB_ENV
       
       - name: Print next version
         run: |
