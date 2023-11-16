@@ -70,12 +70,9 @@ jobs:
         id: latesttag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
 
-      - name: Get previous tag
-        id: previousTag
-        run: |
-          name=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | tail -2 | head -1)
-          echo "previousTag: $name"
-          echo "previousTag=$name" >> $GITHUB_ENV
+      name: Fetch latest release version
+        id: fetch-latest-release
+        uses: reloc8/action-latest-release-version@1.0.0
 
       - if: ${{env.newVersion}} != 'undefined'
         name: Build Changelog
@@ -108,7 +105,7 @@ jobs:
                 }
               ]
             }
-          fromTag: ${{ env.previousTag }}
+          fromTag: ${{ steps.fetch-latest-release.outputs.latest-release }}
           toTag: ${{ steps.tag_version.outputs.new_tag  }}
           outputFile: ../CHANGELOG.md
         env:
