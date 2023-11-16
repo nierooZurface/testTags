@@ -70,9 +70,11 @@ jobs:
         id: latesttag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
 
-      - name: Fetch latest release version
+      - name: latest release version
         id: fetch-latest-release
-        uses: reloc8/action-latest-release-version@1.0.0
+        uses: thebritican/fetch-latest-release@v1
+        with:
+          github_token: ${{ github.token }}
 
       - if: ${{env.newVersion}} != 'undefined'
         name: Build Changelog
@@ -105,7 +107,7 @@ jobs:
                 }
               ]
             }
-          fromTag: ${{ steps.fetch-latest-release.outputs.latest-release }}
+          fromTag: ${{ steps.fetch-latest-release.outputs.tag_name }}
           toTag: ${{ steps.tag_version.outputs.new_tag  }}
           outputFile: ../CHANGELOG.md
         env:
