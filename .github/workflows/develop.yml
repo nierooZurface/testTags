@@ -64,5 +64,7 @@ jobs:
       - name: Get next version
         uses: reecetech/version-increment@2023.10.1
         id: version
+      
+      - name: Print next version
         run: |
           echo ${{ steps.version.outputs.version }}
