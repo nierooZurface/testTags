@@ -68,6 +68,8 @@ jobs:
         with:
           release_branch: main
           increment: patch
+        - name: Set version env
+          run: echo "newVersion=$(echo $version | cut -c 1-6)" >> $GITHUB_ENV
 
       - name: Get next version (minor)
         if: github.event.label.name == 'feature'
@@ -75,13 +77,17 @@ jobs:
         with:
           release_branch: main
           increment: patch
+        - name: Set version env
+          run: echo "newVersion=$(echo $version | cut -c 1-6)" >> $GITHUB_ENV
 
       - name: Get next version (minor)
         if: github.event.label.name != 'feature' || github.event.label.name != 'bugFix'
         uses: reecetech/version-increment@2023.10.1
         with:
           release_branch: main
+        - name: Set version env
+          run: echo "newVersion=$(echo $version | cut -c 1-6)" >> $GITHUB_ENV
       
       - name: Print next version
         run: |
-          echo ${{ steps.version.outputs.version }}
+          echo ${{ env.newVersion }}
