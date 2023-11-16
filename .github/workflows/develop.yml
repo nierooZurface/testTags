@@ -64,6 +64,15 @@ jobs:
       - name: Get next version
         uses: reecetech/version-increment@2023.10.1
         id: version
+        
+        with:
+          release_branch: main
+          increment: 
+            if: github.event.label.name == 'bugFix'
+              patch
+            if: github.event.label.name == 'feature'
+              minor
+
       
       - name: Print next version
         run: |
