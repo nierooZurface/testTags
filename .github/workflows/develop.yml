@@ -88,13 +88,16 @@ jobs:
         name: Print next version
         run: |
           echo ${{steps.new_version_default.outputs.version}}
+          echo "newVersions=${{steps.new_version_default.outputs.version}}" >> $GITHUB_ENV
 
       - if: github.event.label.name == 'feature'
         name: Print next version
         run: |
           echo ${{steps.new_version_minor.outputs.version}}
+          echo "newVersions=${{steps.new_version_minor.outputs.version}}" >> $GITHUB_ENV
 
       - if: github.event.label.name == 'bugFix'
         name: Print next version
         run: |
           echo ${{steps.new_version_patch.outputs.version}}
+          echo "newVersions=${{steps.new_version_patch.outputs.version}}" >> $GITHUB_ENV
