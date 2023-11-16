@@ -64,18 +64,20 @@ jobs:
       - if: github.event.label.name == 'bugFix'
         name: Get next version (patch)
         uses: reecetech/version-increment@2023.10.1
-        id: version
         with:
           release_branch: main
           increment: patch
+        - name: Set verison env
+          run: version=$(echo $version)" >> $GITHUB_ENV
 
       - if: github.event.label.name == 'feature'
         name: Get next version (minor)
         uses: reecetech/version-increment@2023.10.1
-        id: version
         with:
           release_branch: main
           increment: patch
+        - name: Set verison env
+          run: version=$(echo $version)" >> $GITHUB_ENV
 
       
       - name: Print next version
