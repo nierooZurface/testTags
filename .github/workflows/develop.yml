@@ -70,7 +70,7 @@ jobs:
         id: latesttag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
 
-      name: Fetch latest release version
+      - name: Fetch latest release version
         id: fetch-latest-release
         uses: reloc8/action-latest-release-version@1.0.0
 
