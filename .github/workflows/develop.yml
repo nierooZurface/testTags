@@ -60,7 +60,3 @@ jobs:
           outputFile: ../CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Echo changelog
-        run: |
-          echo ${{steps.github_release.outputs.changelog}}

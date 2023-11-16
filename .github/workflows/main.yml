@@ -25,16 +25,41 @@ jobs:
           echo "previousTag: $name"
           echo "previousTag=$name" >> $GITHUB_ENV
 
-      - name: Update CHANGELOG
-        id: changelog
-        uses: requarks/changelog-action@v1
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v3
         with:
-          token: ${{ github.token }}
-          fromTag: ${{ steps.latesttag.outputs.tag }}
-          toTag: ${{ env.previousTag }}
-          writeToFile: false
-          includeInvalidCommits: true
-          excludeTypes: "merge"
+          configurationJson: |
+            {
+              "template": "#{{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>",
+              "categories": [
+                {
+                    "title": "## 🚀 Features",
+                    "labels": ["feature"]
+                },
+                {
+                    "title": "## 🐛 Bug fixes",
+                    "labels": ["bugFix"]
+                },
+                {
+                    "title": "## 🧪 Tests",
+                    "labels": ["test"]
+                },
+                {
+                    "title": "## 💬 Other",
+                    "labels": ["other"]
+                },
+                {
+                    "title": "## 📦 Uncategorized",
+                    "labels": []
+                }
+              ]
+            }
+          fromTag: ${{ env.previousTag }}
+          toTag: ${{ steps.latesttag.outputs.tag }}
+          outputFile: ../CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         uses: ncipollo/release-action@v1.12.0
