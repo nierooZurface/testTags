@@ -61,17 +61,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get next version
+      - if: github.event.label.name == 'bugFix'
+        name: Get next version (patch)
         uses: reecetech/version-increment@2023.10.1
         id: version
-        
         with:
           release_branch: main
-          increment: 
-            if: ${{ github.event.label.name == 'bugFix' }}
-              patch
-            if: ${{ github.event.label.name == 'feature' }}
-              minor
+          increment: patch
+
+      - if: github.event.label.name == 'feature'
+        name: Get next version (minor)
+        uses: reecetech/version-increment@2023.10.1
+        id: version
+        with:
+          release_branch: main
+          increment: patch
 
       
       - name: Print next version
