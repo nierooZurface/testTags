@@ -67,8 +67,6 @@ jobs:
         with:
           release_branch: main
           increment: patch
-        - name: Set verison env
-          run: version=$(echo $version)" >> $GITHUB_ENV
 
       - if: github.event.label.name == 'feature'
         name: Get next version (minor)
@@ -76,9 +74,6 @@ jobs:
         with:
           release_branch: main
           increment: patch
-        - name: Set verison env
-          run: version=$(echo $version)" >> $GITHUB_ENV
-
       
       - name: Print next version
         run: |
