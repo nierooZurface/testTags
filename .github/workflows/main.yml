@@ -26,7 +26,7 @@ jobs:
           echo "previousTag=$name" >> $GITHUB_ENV
 
       - name: Build Changelog
-        id: github_release
+        id: build_changelog
         uses: mikepenz/release-changelog-builder-action@v3
         with:
           configurationJson: |
@@ -67,6 +67,6 @@ jobs:
           allowUpdates: true
           makeLatest: true
           name: ${{ steps.latesttag.outputs.tag }}
-          body: ${{ steps.changelog.outputs.changes }}
+          body: ${{steps.build_changelog.outputs.changelog}}
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ steps.latesttag.outputs.tag }}
