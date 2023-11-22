@@ -104,8 +104,8 @@ jobs:
                 }
               ]
             }
-          fromTag: ${{ steps.fetch-latest-release.outputs.tag_name }}
-          toTag: ${{ steps.last_release.outputs.tag_name }}
+          fromTag: ${{ steps.last_release.outputs.tag_name }}
+          toTag: ${{ steps.tag_version.outputs.new_tag  }}
           outputFile: ../CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
