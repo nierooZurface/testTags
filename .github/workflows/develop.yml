@@ -1,4 +1,4 @@
-name: Changelog Generator
+name: Create new tag
 on:
   pull_request:
     types: [ labeled ]
