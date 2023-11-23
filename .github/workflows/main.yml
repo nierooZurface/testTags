@@ -56,8 +56,8 @@ jobs:
                 }
               ]
             }
-          fromTag: refs/heads/develop
-          toTag: ${{ steps.latesttag.outputs.tag }}
+          fromTag: ${{ steps.last_release.outputs.tag_name }}
+          toTag: refs/heads/develop
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
