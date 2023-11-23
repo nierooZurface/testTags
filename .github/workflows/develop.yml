@@ -46,20 +46,20 @@ jobs:
       - if: github.event.label.name != 'feature' && github.event.label.name != 'bugFix' 
         name: Set next version
         run: |
-          echo ${{steps.new_version_default.outputs.version}}
-          echo newVersion=${{steps.new_version_default.outputs.version}} >> $GITHUB_ENV
+          echo ${{steps.new_version_patch.outputs.major-version}}.${{steps.new_version_patch.outputs.minor-version}}.{{steps.new_version_patch.outputs.patch-version}}
+          echo newVersion=${{steps.new_version_patch.outputs.major-version}}.${{steps.new_version_patch.outputs.minor-version}}.{{steps.new_version_patch.outputs.patch-version}} >> $GITHUB_ENV
 
       - if: github.event.label.name == 'feature'
         name: Set next version
         run: |
-          echo ${{steps.new_version_minor.outputs.version}}
-          echo newVersion=${{steps.new_version_minor.outputs.version}} >> $GITHUB_ENV
+          echo ${{steps.new_version_patch.outputs.major-version}}.${{steps.new_version_patch.outputs.minor-version}}.{{steps.new_version_patch.outputs.patch-version}}
+          echo newVersion=${{steps.new_version_patch.outputs.major-version}}.${{steps.new_version_patch.outputs.minor-version}}.{{steps.new_version_patch.outputs.patch-version}} >> $GITHUB_ENV
 
       - if: github.event.label.name == 'bugFix'
         name: Set next version
         run: |
-          echo ${{steps.new_version_patch.outputs.version}}
-          echo newVersion=${{steps.new_version_patch.outputs.version}} >> $GITHUB_ENV
+          echo ${{steps.new_version_patch.outputs.major-version}}.${{steps.new_version_patch.outputs.minor-version}}.{{steps.new_version_patch.outputs.patch-version}}
+          echo newVersion=${{steps.new_version_patch.outputs.major-version}}.${{steps.new_version_patch.outputs.minor-version}}.{{steps.new_version_patch.outputs.patch-version}} >> $GITHUB_ENV
 
       - name: Print new version
         run: |
