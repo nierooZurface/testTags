@@ -14,10 +14,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get latest tag
-        id: latesttag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
-
       - name: "Get latest release"
         id: last_release
         uses: InsonusK/get-latest-release@v1.0.1
@@ -57,7 +53,6 @@ jobs:
               ]
             }
           fromTag: ${{ steps.last_release.outputs.tag_name }}
-          toTag: ${{ steps.latesttag.outputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
