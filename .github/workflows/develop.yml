@@ -43,7 +43,7 @@ jobs:
         with:
           release_branch: develop
       
-      - if: github.event.label.name != 'feature' || github.event.label.name != 'bugFix' 
+      - if: github.event.label.name != 'feature' && github.event.label.name != 'bugFix' 
         name: Set next version
         run: |
           echo ${{steps.new_version_default.outputs.version}}
