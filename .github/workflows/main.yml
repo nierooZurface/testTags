@@ -54,6 +54,9 @@ jobs:
                     "title": "## 📦 Uncategorized",
                     "labels": []
                 }
+              ],
+              "base_branches": [
+                "develop"
               ]
             }
           fromTag: ${{ steps.last_release.outputs.tag_name }}
