@@ -7,7 +7,7 @@ const server = http.createServer((req, res) => {
   res.statusCode = 200;
   res.statusCode = 201;
   res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World! \n\n Second line!');
+  res.end('Hello World! \n\n Second line! \n\n Third line!');
 });
 
 server.listen(port, hostname, () => {
