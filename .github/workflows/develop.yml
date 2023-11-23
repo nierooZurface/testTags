@@ -16,9 +16,13 @@ jobs:
           fetch-depth: 0
 
 
-      - name: Print label
-        run: |
-          echo ${{ github.event.label.name }}
+      - name: PR is labelled
+        uses: mheap/github-action-required-labels@v5
+        with: 
+          mode: exactly
+          count: 1
+          labels: "bugFix, feature"
+          add_comment: true
 
       - name: Get next version (patch)
         id: new_version_patch
