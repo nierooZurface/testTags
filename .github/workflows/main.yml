@@ -25,8 +25,16 @@ jobs:
           echo "previousTag: $name"
           echo "previousTag=$name" >> $GITHUB_ENV
 
-      - name: Build Changelog
-        id: build_changelog
+      - name: "Get latest release"
+        id: last_release
+        uses: InsonusK/get-latest-release@v1.0.1
+        with:
+          myToken: ${{ github.token }}
+          view_top: 1
+
+      - if: ${{env.newVersion}} != 'undefined'
+        name: Build Changelog
+        id: github_release
         uses: mikepenz/release-changelog-builder-action@v3
         with:
           configurationJson: |
@@ -55,8 +63,8 @@ jobs:
                 }
               ]
             }
-          fromTag: ${{ env.previousTag }}
-          toTag: ${{ steps.latesttag.outputs.tag }}
+          fromTag: ${{ steps.last_release.outputs.tag_name }}
+          toTag: ${{ env.previousTag  }}
           outputFile: ../CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -38,7 +38,7 @@ jobs:
 
       - name: Get next version (default)
         id: new_version_default
-        if: github.event.label.name != 'feature' || github.event.label.name != 'bugFix'
+        if: github.event.label.name != 'feature' && github.event.label.name != 'bugFix'
         uses: reecetech/version-increment@2023.10.1
         with:
           release_branch: develop
@@ -71,47 +71,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           custom_tag: ${{ env.newVersion}}
-
-      - name: "Get latest release"
-        id: last_release
-        uses: InsonusK/get-latest-release@v1.0.1
-        with:
-          myToken: ${{ github.token }}
-          view_top: 1
-
-      - if: ${{env.newVersion}} != 'undefined'
-        name: Build Changelog
-        id: github_release
-        uses: mikepenz/release-changelog-builder-action@v3
-        with:
-          configurationJson: |
-            {
-              "template": "#{{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>",
-              "categories": [
-                {
-                    "title": "## 🚀 Features",
-                    "labels": ["feature"]
-                },
-                {
-                    "title": "## 🐛 Bug fixes",
-                    "labels": ["bugFix"]
-                },
-                {
-                    "title": "## 🧪 Tests",
-                    "labels": ["test"]
-                },
-                {
-                    "title": "## 💬 Other",
-                    "labels": ["other"]
-                },
-                {
-                    "title": "## 📦 Uncategorized",
-                    "labels": []
-                }
-              ]
-            }
-          fromTag: ${{ steps.last_release.outputs.tag_name }}
-          toTag: ${{ steps.tag_version.outputs.new_tag  }}
-          outputFile: ../CHANGELOG.md
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
