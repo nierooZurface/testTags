@@ -58,6 +58,7 @@ jobs:
             }
           fromTag: ${{ steps.last_release.outputs.tag_name }}
           toTag: ${{ steps.latesttag.outputs.tag }}
+          fetchViaCommits: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
