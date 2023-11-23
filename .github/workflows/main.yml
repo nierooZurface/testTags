@@ -18,13 +18,6 @@ jobs:
         id: latesttag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
 
-      - name: Get previous tag
-        id: previousTag
-        run: |
-          name=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | tail -2 | head -1)
-          echo "previousTag: $name"
-          echo "previousTag=$name" >> $GITHUB_ENV
-
       - name: "Get latest release"
         id: last_release
         uses: InsonusK/get-latest-release@v1.0.1
