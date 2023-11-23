@@ -27,7 +27,7 @@ jobs:
 
       - if: ${{env.newVersion}} != 'undefined'
         name: Build Changelog
-        id: github_release
+        id: build_changelog
         uses: mikepenz/release-changelog-builder-action@v3
         with:
           configurationJson: |
@@ -61,7 +61,6 @@ jobs:
             }
           fromTag: ${{ steps.last_release.outputs.tag_name }}
           toTag: ${{ steps.latesttag.outputs.tag }}
-          outputFile: ../CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
