@@ -8,22 +8,30 @@ on:
 jobs:
   check-if-labelled:
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
+
     steps:
+<<<<<<< HEAD
       - id: check-labels
         uses: mheap/github-action-required-labels@v5
         with:
           mode: exactly
           count: 1
           labels: "bugFix, feature"
+=======
+      - name: Check if pull request is labeled
+        if: github.event.*.label.name != 'bugFix' || github.event.*.label.name != 'feature'
+        run: |
+          echo Cannot merge becuase pull request is not labelled correctly
+          echo ${{ toJSON(github.event.pull_request.labels.*.name)[0] }}
+          exit 1
+>>>>>>> bac55cda7b594b1098f2bedc6506b33420f3bcc0
       
   create-tag-push-tag:
     needs: check-if-labelled
     runs-on: ubuntu-latest
 
     steps:
+<<<<<<< HEAD
       - name: print check label output
         run: |
           echo "Enabled Features:"
@@ -32,6 +40,8 @@ jobs:
             echo "$f"
           done
 
+=======
+>>>>>>> bac55cda7b594b1098f2bedc6506b33420f3bcc0
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
@@ -39,7 +49,7 @@ jobs:
 
       - name: Get next version (patch)
         id: new_version_patch
-        if: steps.check-labels.outputs.labels == 'bugFix'
+        if: github.event.label.name == 'bugFix'
         uses: reecetech/version-increment@2023.10.1
         with:
           release_branch: develop
@@ -47,7 +57,7 @@ jobs:
 
       - name: Get next version (minor)
         id: new_version_minor
-        if: steps.check-labels.outputs.labels == 'feature'
+        if: github.event.label.name == 'feature'
         uses: reecetech/version-increment@2023.10.1
         with:
           release_branch: develop
@@ -55,24 +65,22 @@ jobs:
 
       - name: Get next version (default)
         id: new_version_default
-        if: steps.check-labels.outputs.labels != 'feature' && steps.check-labels.outputs.labels != 'bugFix'
+        if: github.event.label.name != 'feature' && github.event.label.name != 'bugFix'
         uses: reecetech/version-increment@2023.10.1
         with:
           release_branch: develop
       
-      - if: steps.check-labels.outputs.labels != 'feature' && steps.check-labels.outputs.labels != 'bugFix' 
+      - if: github.event.label.name != 'feature' && github.event.label.name != 'bugFix' 
         name: Set next version
         run: |
           echo ${{steps.new_version_default.outputs.major-version}}.${{steps.new_version_default.outputs.minor-version}}.${{steps.new_version_default.outputs.patch-version}}
           echo newVersion=${{steps.new_version_default.outputs.major-version}}.${{steps.new_version_default.outputs.minor-version}}.${{steps.new_version_default.outputs.patch-version}} >> $GITHUB_ENV
-
-      - if: steps.check-labels.outputs.labels == 'feature'
+      - if: github.event.label.name == 'feature'
         name: Set next version
         run: |
           echo ${{steps.new_version_minor.outputs.major-version}}.${{steps.new_version_minor.outputs.minor-version}}.${{steps.new_version_minor.outputs.patch-version}}
           echo newVersion=${{steps.new_version_minor.outputs.major-version}}.${{steps.new_version_minor.outputs.minor-version}}.${{steps.new_version_minor.outputs.patch-version}} >> $GITHUB_ENV
-
-      - if: steps.check-labels.outputs.labels == 'bugFix'
+      - if: github.event.label.name == 'bugFix'
         name: Set next version
         run: |
           echo ${{steps.new_version_patch.outputs.major-version}}.${{steps.new_version_patch.outputs.minor-version}}.${{steps.new_version_patch.outputs.patch-version}}
