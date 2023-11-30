@@ -8,8 +8,8 @@ on:
 jobs:   
   require-label-for-pr:
     runs-on: ubuntu-latest
-        - name: Check if pr is labeled
-          run: |
-            echo Cannot merge becuase pull request is not labelled correctly
-            echo ${{ toJSON(github.event.pull_request.labels.*.name)[0] }}
-            exit 1
+      - name: Check if pr is labeled
+        run: |
+          echo Cannot merge becuase pull request is not labelled correctly
+          echo ${{ toJSON(github.event.pull_request.labels.*.name)[0] }}
+          exit 1
