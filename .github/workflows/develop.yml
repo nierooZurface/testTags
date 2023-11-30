@@ -5,9 +5,11 @@ on:
     branches: 
       - "develop"
 
-jobs:   
+jobs:
   create-tag-push-tag:
     runs-on: ubuntu-latest
+
+    steps:
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
