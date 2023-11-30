@@ -18,14 +18,16 @@ jobs:
           mode: exactly
           count: 1
           labels: "bugFix, feature"
-        run: |
-          echo ${{steps.check-labels.outputs.labels[0]}}
       
   create-tag-push-tag:
     needs: check-if-labelled
     runs-on: ubuntu-latest
 
     steps:
+      - name: print check label output
+        run: |
+          echo ${{steps.check-labels.outputs.labels[0]}}
+
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
