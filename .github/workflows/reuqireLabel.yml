@@ -13,5 +13,5 @@ jobs:
       - name: Check if pr is labeled
         run: |
           echo Cannot merge becuase pull request is not labelled correctly
-          echo ${{ toJSON(github.event.pull_request.labels.*.name)[0] }}
+          echo ${{ toJSON(github.event.pull_request.labels.*.name }}
           exit 1
