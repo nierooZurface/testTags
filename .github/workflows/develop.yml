@@ -8,40 +8,19 @@ on:
 jobs:
   check-if-labelled:
     runs-on: ubuntu-latest
-
     steps:
-<<<<<<< HEAD
-      - id: check-labels
-        uses: mheap/github-action-required-labels@v5
-        with:
-          mode: exactly
-          count: 1
-          labels: "bugFix, feature"
-=======
       - name: Check if pull request is labeled
         if: github.event.*.label.name != 'bugFix' || github.event.*.label.name != 'feature'
         run: |
           echo Cannot merge becuase pull request is not labelled correctly
           echo ${{ toJSON(github.event.pull_request.labels.*.name)[0] }}
           exit 1
->>>>>>> bac55cda7b594b1098f2bedc6506b33420f3bcc0
       
   create-tag-push-tag:
     needs: check-if-labelled
     runs-on: ubuntu-latest
 
     steps:
-<<<<<<< HEAD
-      - name: print check label output
-        run: |
-          echo "Enabled Features:"
-          for f in $(echo "{{steps.check-labels.outputs.labels}}" | sed "s/,/ /g")
-          do
-            echo "$f"
-          done
-
-=======
->>>>>>> bac55cda7b594b1098f2bedc6506b33420f3bcc0
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
