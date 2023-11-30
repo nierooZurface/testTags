@@ -15,6 +15,7 @@ jobs:
         run: |
           echo Cannot merge becuase pull request is not labelled correctly
           echo ${{ github.event }}
+          echo ${{ github.event.action }}
           exit 1
       
   create-tag-push-tag:
