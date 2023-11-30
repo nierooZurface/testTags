@@ -5,18 +5,7 @@ on:
     branches: 
       - "develop"
 
-jobs:
-  check-if-labeled:
-    runs-on: ubuntu-latest
-
-    steps:
-      - id: check-labels
-        uses: mheap/github-action-required-labels@v5
-        with:
-          mode: exactly
-          count: 1
-          labels: "bugFix, feature"
-      
+jobs:   
   create-tag-push-tag:
     runs-on: ubuntu-latest
       - name: Checkout Code
