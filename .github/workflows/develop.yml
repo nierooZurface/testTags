@@ -18,12 +18,6 @@ jobs:
           mode: exactly
           count: 1
           labels: "bugFix, feature"
-        run: |
-          echo "Enabled Features:"
-          for f in $(echo "{{steps.check-labels.outputs.labels}}" | sed "s/,/ /g")
-          do
-            echo "$f"
-          done
       
   create-tag-push-tag:
     needs: check-if-labelled
@@ -32,7 +26,11 @@ jobs:
     steps:
       - name: print check label output
         run: |
-          echo ${{steps.check-labels.outputs.labels[0]}}
+          echo "Enabled Features:"
+          for f in $(echo "{{steps.check-labels.outputs.labels}}" | sed "s/,/ /g")
+          do
+            echo "$f"
+          done
 
       - name: Checkout Code
         uses: actions/checkout@v3
