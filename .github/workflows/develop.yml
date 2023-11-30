@@ -19,7 +19,11 @@ jobs:
           count: 1
           labels: "bugFix, feature"
         run: |
-          echo ${{steps.check-labels.outputs.labels[0]}}
+          echo "Enabled Features:"
+          for f in $(echo "{{steps.check-labels.outputs.labels}}" | sed "s/,/ /g")
+          do
+            echo "$f"
+          done
       
   create-tag-push-tag:
     needs: check-if-labelled
