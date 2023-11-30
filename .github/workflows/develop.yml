@@ -14,7 +14,7 @@ jobs:
         if: github.event.*.label.name != 'bugFix' || github.event.*.label.name != 'feature'
         run: |
           echo Cannot merge becuase pull request is not labelled correctly
-          echo ${{ toJSON(github.event) }}
+          echo ${{ toJSON(github.event.pull_request.labels.*.name) }}
           exit 1
       
   create-tag-push-tag:
