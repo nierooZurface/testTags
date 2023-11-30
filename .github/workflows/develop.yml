@@ -1,12 +1,23 @@
 name: Create new tag
 on:
   pull_request:
-    types: [ labeled ]
+    types: [ opened, reopened, edited ]
     branches: 
       - "develop"
 
 jobs:
+  check-if-labelled:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if pull request is labeled
+        if: github.event.label.name != 'bugFix' || github.event.label.name != 'feature'
+        run: |
+          echo Cannot merge becuase pull request is not labelled correctly
+          exit 1
+      
   create-tag-push-tag:
+    needs: check-if-labelled
     runs-on: ubuntu-latest
 
     steps:
