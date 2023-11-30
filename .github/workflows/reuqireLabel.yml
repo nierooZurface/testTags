@@ -8,8 +8,6 @@ on:
 jobs:   
   require-label-for-pr:
     runs-on: ubuntu-latest
-
-    steps:
       - name: Check if pr is labeled
         run: |
           echo Cannot merge becuase pull request is not labelled correctly
