@@ -8,14 +8,11 @@ on:
 jobs:
   check-if-labelled:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check if pull request is labeled
-        if: github.event.*.label.name != 'bugFix' || github.event.*.label.name != 'feature'
-        run: |
-          echo Cannot merge becuase pull request is not labelled correctly
-          echo ${{ github.event.pull_request.labels.*.name[0] }}
-          exit 1
+    - uses: yogevbd/enforce-label-action@2.1.0
+      with:
+        REQUIRED_LABELS_ANY: "bugFix,feature"
+        REQUIRED_LABELS_ANY_DESCRIPTION: "Select at least one label ['bugFix','feature']"
       
   create-tag-push-tag:
     needs: check-if-labelled
