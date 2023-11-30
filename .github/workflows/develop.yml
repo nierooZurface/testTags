@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Check if pull request is labeled
-        if: github.event.action != 'labeled'
+        if: github.event.*.label.name != 'bugFix' || github.event.*.label.name != 'feature'
         run: |
           echo Cannot merge becuase pull request is not labelled correctly
-          echo ${{ github.event }}
+          echo ${{ github.event.*.label.name }}
           exit 1
       
   create-tag-push-tag:
