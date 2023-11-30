@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Check if pull request is labeled
-        if: github.event.label.name != 'bugFix' || github.event.label.name != 'feature'
+        if: github.event.action != 'labeled'
         run: |
           echo Cannot merge becuase pull request is not labelled correctly
           exit 1
