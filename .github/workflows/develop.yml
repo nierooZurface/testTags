@@ -19,7 +19,11 @@ jobs:
           count: 1
           labels: "bugFix, feature"
         run: |
+<<<<<<< HEAD
+          echo ${{steps.check-labels.outputs.labels[0]}}
+=======
         echo ${{steps.check-labels.outputs.labels[0]}}
+>>>>>>> 144d3a79515e9fc96d4e5af1ed5be8a0fe895300
       
   create-tag-push-tag:
     needs: check-if-labelled
