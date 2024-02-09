@@ -1,11 +1,12 @@
-name: Changelog Generator
+name: Create new tag
 on:
-  push:
-    branches:
+  pull_request:
+    types: [ labeled ]
+    branches: 
       - "develop"
 
 jobs:
-  deploy:
+  create-tag-push-tag:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,49 +15,48 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get latest tag
-        id: latesttag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
-
-      - name: Get previous tag
-        id: previousTag
-        run: |
-          name=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | tail -2 | head -1)
-          echo "previousTag: $name"
-          echo "previousTag=$name" >> $GITHUB_ENV
-
-      - name: Build Changelog
-        id: github_release
-        uses: mikepenz/release-changelog-builder-action@v3
+      - name: Get next version (patch)
+        id: new_version_patch
+        if: github.event.label.name == 'bugFix'
+        uses: reecetech/version-increment@2023.10.1
         with:
-          configurationJson: |
-            {
-              "template": "#{{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>",
-              "categories": [
-                {
-                    "title": "## 🚀 Features",
-                    "labels": ["feature"]
-                },
-                {
-                    "title": "## 🐛 Bug fixes",
-                    "labels": ["bugFix"]
-                },
-                {
-                    "title": "## 🧪 Tests",
-                    "labels": ["test"]
-                },
-                {
-                    "title": "## 💬 Other",
-                    "labels": ["other"]
-                },
-                {
-                    "title": "## 📦 Uncategorized",
-                    "labels": []
-                }
-              ]
-            }
-          fromTag: ${{ env.previousTag }}
-          toTag: ${{ steps.latesttag.outputs.tag }}
-          outputFile: ../CHANGELOG.md
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          release_branch: develop
+          increment: patch
+
+      - name: Get next version (minor)
+        id: new_version_minor
+        if: github.event.label.name == 'feature'
+        uses: reecetech/version-increment@2023.10.1
+        with:
+          release_branch: develop
+          increment: minor
+
+      - name: Get next version (default)
+        id: new_version_default
+        if: github.event.label.name != 'feature' && github.event.label.name != 'bugFix'
+        uses: reecetech/version-increment@2023.10.1
+        with:
+          release_branch: develop
+      
+      - if: github.event.label.name != 'feature' && github.event.label.name != 'bugFix' 
+        name: Set next version
+        run: |
+          echo ${{steps.new_version_default.outputs.major-version}}.${{steps.new_version_default.outputs.minor-version}}.${{steps.new_version_default.outputs.patch-version}}
+          echo newVersion=${{steps.new_version_default.outputs.major-version}}.${{steps.new_version_default.outputs.minor-version}}.${{steps.new_version_default.outputs.patch-version}} >> $GITHUB_ENV
+      - if: github.event.label.name == 'feature'
+        name: Set next version
+        run: |
+          echo ${{steps.new_version_minor.outputs.major-version}}.${{steps.new_version_minor.outputs.minor-version}}.${{steps.new_version_minor.outputs.patch-version}}
+          echo newVersion=${{steps.new_version_minor.outputs.major-version}}.${{steps.new_version_minor.outputs.minor-version}}.${{steps.new_version_minor.outputs.patch-version}} >> $GITHUB_ENV
+      - if: github.event.label.name == 'bugFix'
+        name: Set next version
+        run: |
+          echo ${{steps.new_version_patch.outputs.major-version}}.${{steps.new_version_patch.outputs.minor-version}}.${{steps.new_version_patch.outputs.patch-version}}
+          echo newVersion=${{steps.new_version_patch.outputs.major-version}}.${{steps.new_version_patch.outputs.minor-version}}.${{steps.new_version_patch.outputs.patch-version}} >> $GITHUB_ENV
+        
+      - name: Push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          custom_tag: ${{ env.newVersion}}
