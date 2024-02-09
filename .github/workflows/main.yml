@@ -51,6 +51,10 @@ jobs:
                     "labels": ["other"]
                 },
                 {
+                    "title": "## ⏪️ Rebase",
+                    "labels": ["rebase"]
+                },
+                {
                     "title": "## 📦 Uncategorized",
                     "labels": []
                 }
